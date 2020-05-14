@@ -9,7 +9,7 @@ create table user
     dttmUpdated     timestamp  default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
     id              int auto_increment primary key,
     username        varchar(16) unique,
-    password        varchar(16)
+    password        varchar(128)
 );
 
 create table blogPost

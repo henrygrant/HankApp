@@ -1,11 +1,11 @@
 <template>
-  <div class="login">
+  <div class="register">
     <div class="card p-3 bg-dark">
       <b-form
-        @submit="login"
+        @submit="onSubmit"
       >
         <h1 class="h3 mb-3">
-          Login
+          Register
         </h1>
         <b-form-input
           id="username"
@@ -16,11 +16,19 @@
         />
         <b-form-input
           id="password"
-          class="mt-3"
           v-model="form.password"
+          class="mt-3"
           type="password"
           required
           placeholder="Password"
+        />
+        <b-form-input
+          id="confirmPassword"
+          v-model="form.passwordConfirm"
+          class="mt-3"
+          type="password"
+          required
+          placeholder="Confirm Password"
         />
         <b-button
           class="mt-3"
@@ -35,10 +43,10 @@
 </template>
 
 <script>
-    import router from '../router'
+    import router from "../router";
 
     export default {
-        name: 'Login',
+        name: 'Register',
         components: {},
         data() {
             return {
@@ -49,15 +57,15 @@
             }
         },
         methods: {
-            login(e) {
-                e.preventDefault()
-                this.$store.dispatch('auth/login', this.form)
+            onSubmit(evt) {
+                evt.preventDefault()
+                this.$store.dispatch('auth/register', this.form)
                     .then(resp => {
-                        console.log("Logged in!", resp)
+                        console.log("Registered!", resp)
                         router.push('/')
                     })
                     .catch(err => {
-                        console.error("Error logging in", err)
+                        console.error("Error registering user", err)
                     })
             }
         },
@@ -65,7 +73,7 @@
 </script>
 
 <style scoped>
-  .login {
+  .register {
     height: 100%;
     display: flex;
     justify-content: center;

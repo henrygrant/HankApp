@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <b-navbar 
-      variant="dark" 
+    <b-navbar
+      variant="dark"
       type="dark"
       toggleable="md"
     >
       <b-navbar-brand to="/">
         Henry Grant
       </b-navbar-brand>
-      <b-navbar-toggle target="nav-collapse" />
-      <b-collapse 
-        id="nav-collapse" 
+      <b-navbar-toggle target="nav-collapse"/>
+      <b-collapse
+        id="nav-collapse"
         is-nav
       >
         <!-- left -->
@@ -25,28 +25,62 @@
 
         <!-- right -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item to="/login">
+          <b-nav-item
+            v-if="!auth.status.loggedIn"
+            to="/register"
+          >
+            Register
+          </b-nav-item>
+          <b-nav-item
+            v-if="!auth.status.loggedIn"
+            to="/login"
+          >
             Login
+          </b-nav-item>
+          <b-nav-item
+            v-if="auth.status.loggedIn"
+            @click="logout"
+          >
+            Log Out
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <router-view />
+    <router-view/>
   </div>
 </template>
 
-<style>
-html, body {
-  height: 100%;
-  background-color: #6c757d!important;
-}
+<script>
+    import {mapState} from 'vuex'
 
-#app {
-  height: calc(100% - 56px);
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #FFF;
-}
+    export default {
+        computed: mapState(['auth']),
+        methods: {
+            logout: function() {
+                this.$store.dispatch('auth/logout')
+                    .then(resp => {
+                        console.log("Logged out", resp)
+                    })
+                    .catch(err => {
+                        console.error("Error logging out", err)
+                    })
+            }
+        }
+    }
+</script>
+
+<style>
+  html, body {
+    height: 100%;
+    background-color: #6c757d !important;
+  }
+
+  #app {
+    height: calc(100% - 56px);
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #FFF;
+  }
 </style>

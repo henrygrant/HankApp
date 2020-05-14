@@ -35,15 +35,15 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-  BlogPost.findById(req.params.id, (err, data) => {
+  BlogPost.findById(req.body.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Couldn't find BlogPost with id ${req.params.id}.`
+          message: `Couldn't find BlogPost with id ${req.body.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving BlogPost with id " + req.params.id
+          message: "Error retrieving BlogPost with id " + req.body.id
         });
       }
     } else res.send(data);
@@ -58,17 +58,17 @@ exports.update = (req, res) => {
   }
 
   BlogPost.updateById(
-    req.params.id,
+    req.body.id,
     new BlogPost(req.body),
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Couldn't find BlogPost with id ${req.params.id}.`
+            message: `Couldn't find BlogPost with id ${req.body.id}.`
           });
         } else {
           res.status(500).send({
-            message: "Error updating BlogPost with id " + req.params.id
+            message: "Error updating BlogPost with id " + req.body.id
           });
         }
       } else res.send(data);
@@ -77,15 +77,15 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-  BlogPost.removeById(req.params.id, (err, data) => {
+  BlogPost.removeById(req.body.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found BlogPost with id ${req.params.id}.`
+          message: `Not found BlogPost with id ${req.body.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Could not delete BlogPost with id " + req.params.id
+          message: "Could not delete BlogPost with id " + req.body.id
         });
       }
     } else res.send({ message: `BlogPost was deleted successfully!` });

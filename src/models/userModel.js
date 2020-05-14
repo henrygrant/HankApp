@@ -37,6 +37,24 @@ User.findById = (userId, result) => {
   });
 };
 
+User.findByUsername = (username, result) => {
+  db.query(`SELECT * FROM user WHERE username = '${username}'`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("found user: ", res[0]);
+      result(null, res[0]);
+      return;
+    }
+
+    result({ kind: "not_found" }, null);
+  });
+};
+
 User.getAll = result => {
   db.query("SELECT * FROM user", (err, res) => {
     if (err) {

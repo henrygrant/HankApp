@@ -22,3 +22,4 @@ yarn-error.log*
 
 # config vars
 /app/config/dbConfig.js
+/app/config/jwtConfig.js
