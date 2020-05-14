@@ -56,7 +56,7 @@
     export default {
         computed: mapState(['auth']),
         methods: {
-            logout: function() {
+            logout: function () {
                 this.$store.dispatch('auth/logout')
                     .then(resp => {
                         console.log("Logged out", resp)

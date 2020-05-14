@@ -49,7 +49,7 @@ exports.login = (req, res) => {
                 });
             }
         } else {
-            if (bcrypt.compareSync(req.body.password, data.password )) {
+            if (bcrypt.compareSync(req.body.password, data.password)) {
                 res.status(200).send(data)
             } else {
                 res.status(401).send({

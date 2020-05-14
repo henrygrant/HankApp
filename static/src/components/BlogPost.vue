@@ -5,11 +5,10 @@
 </template>
 
 <script>
-export default {
-  name: 'BlogPost',
-  props: {
-  }
-}
+    export default {
+        name: 'BlogPost',
+        props: {}
+    }
 </script>
 
 <style scoped>

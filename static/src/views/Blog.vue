@@ -1,19 +1,19 @@
 <template>
   <div class="blog">
     Blog
-    <BlogPost />
+    <BlogPost/>
   </div>
 </template>
 
 <script>
-import BlogPost from '@/components/BlogPost.vue'
+    import BlogPost from '@/components/BlogPost.vue'
 
-export default {
-  name: 'Blog',
-  components: {
-    BlogPost
-  }
-}
+    export default {
+        name: 'Blog',
+        components: {
+            BlogPost
+        }
+    }
 </script>
 
 <style scoped>
