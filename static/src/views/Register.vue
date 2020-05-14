@@ -60,8 +60,7 @@
             onSubmit(evt) {
                 evt.preventDefault()
                 this.$store.dispatch('auth/register', this.form)
-                    .then(resp => {
-                        console.log("Registered!", resp)
+                    .then(() => {
                         router.push('/')
                     })
                     .catch(err => {

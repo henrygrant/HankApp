@@ -8,7 +8,7 @@
       <b-navbar-brand to="/">
         Henry Grant
       </b-navbar-brand>
-      <b-navbar-toggle target="nav-collapse"/>
+      <b-navbar-toggle target="nav-collapse" />
       <b-collapse
         id="nav-collapse"
         is-nav
@@ -46,7 +46,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -58,9 +58,6 @@
         methods: {
             logout: function () {
                 this.$store.dispatch('auth/logout')
-                    .then(resp => {
-                        console.log("Logged out", resp)
-                    })
                     .catch(err => {
                         console.error("Error logging out", err)
                     })

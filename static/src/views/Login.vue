@@ -16,8 +16,8 @@
         />
         <b-form-input
           id="password"
-          class="mt-3"
           v-model="form.password"
+          class="mt-3"
           type="password"
           required
           placeholder="Password"
@@ -52,8 +52,7 @@
             login(e) {
                 e.preventDefault()
                 this.$store.dispatch('auth/login', this.form)
-                    .then(resp => {
-                        console.log("Logged in!", resp)
+                    .then(() => {
                         router.push('/')
                     })
                     .catch(err => {
