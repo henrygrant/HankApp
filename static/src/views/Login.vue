@@ -36,15 +36,28 @@
 
 <script>
     import router from '../router'
+    import {validationMixin} from 'vuelidate'
+    import {required} from 'vuelidate/lib/validators'
 
     export default {
         name: 'Login',
         components: {},
+        mixins: [validationMixin],
         data() {
             return {
                 form: {
                     username: '',
                     password: ''
+                }
+            }
+        },
+        validations: {
+            form: {
+                username: {
+                    required
+                },
+                password: {
+                    required
                 }
             }
         },
