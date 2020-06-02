@@ -57,9 +57,19 @@ export default {
       this.$store
         .dispatch("auth/login", this.form)
         .then(() => {
+          this.$root.$bvToast.toast('Logged in', {
+            title: 'Authentication',
+            variant: 'info',
+            toaster: 'b-toaster-bottom-right'
+          })
           router.push("/");
         })
         .catch(err => {
+          this.$root.$bvToast.toast('Failed to log in', {
+            title: 'Authentication',
+            variant: 'danger',
+            toaster: 'b-toaster-bottom-right'
+          })
           console.error("Error logging in", err);
         });
     }

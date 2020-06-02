@@ -84,12 +84,30 @@ export default {
       this.$store
         .dispatch("auth/register", this.form)
         .then(() => {
-          this.$store.dispatch("auth/login", this.form).catch(err => {
+          this.$store.dispatch("auth/login", this.form)
+          .then(() => 
+            this.$root.$bvToast.toast('Registration successful', {
+              title: 'Authentication',
+              variant: 'success',
+              toaster: 'b-toaster-bottom-right'
+            })
+          )
+          .catch(err => {
+            this.$root.$bvToast.toast('Error logging in', {
+              title: 'Authentication',
+              variant: 'danger',
+              toaster: 'b-toaster-bottom-right'
+            })
             console.error("Error logging in", err);
           });
           router.push("/");
         })
         .catch(err => {
+          this.$root.$bvToast.toast('Error registering', {
+            title: 'Authentication',
+            variant: 'danger',
+            toaster: 'b-toaster-bottom-right'
+          })
           console.error("Error registering user", err);
         });
     },

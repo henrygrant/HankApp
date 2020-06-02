@@ -1,7 +1,7 @@
 import AuthService from '../services/authService';
 
 const user = JSON.parse(localStorage.getItem('user'));
-const initialState = user.token
+const initialState = user && user.token
   ? { status: { loggedIn: true }, user }
   : { status: { loggedIn: false }, user: null };
 
@@ -24,7 +24,6 @@ export default {
     },
     logout({ commit }) {
       localStorage.removeItem("user")
-      AuthService.logout();
       commit('logout');
     },
     register({ commit }, user) {

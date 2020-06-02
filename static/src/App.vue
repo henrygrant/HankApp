@@ -29,7 +29,15 @@ export default {
   computed: mapState(["auth"]),
   methods: {
     logout: function() {
-      this.$store.dispatch("auth/logout").catch(err => {
+      this.$store.dispatch("auth/logout")
+      .then(() => {
+        this.$root.$bvToast.toast('Logged out', {
+          title: 'Authentication',
+          variant: 'warning',
+          toaster: 'b-toaster-bottom-right'
+        })
+      })
+      .catch(err => {
         console.error("Error logging out", err);
       });
     }
