@@ -18,11 +18,10 @@ create table blogPost
     dttmUpdated      timestamp  default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
     id               int auto_increment primary key,
     userId           int not null,
-    title            varchar(128)                         not null,
     content          text charset utf8                    not null,
     constraint blogPost_user foreign key (userId) references user (id)
 );
 
 insert into user (username, password) values ('henry', 'pword');
-insert into blogPost (userId, title, content) values ((select id from user where username = 'henry'), 'blog title', 'blog content')
+insert into blogPost (userId, content) values ((select id from user where username = 'henry'), 'blog title', 'blog content')
 

@@ -1,20 +1,20 @@
 const db = require("../db.js");
 
 const BlogPost = function (blogPost) {
-    this.email = blogPost.email;
-    this.name = blogPost.name;
-    this.active = blogPost.active;
+    this.id = blogPost.id;
+    this.userId = blogPost.userId;
+    this.content = blogPost.content;
 };
 
 BlogPost.create = (newBlogPost, result) => {
     db.query("INSERT INTO blogPost SET ?", newBlogPost, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
 
-        console.log("created blogPost: ", {id: res.insertId, ...newBlogPost});
+        // console.log("created blogPost: ", {id: res.insertId, ...newBlogPost});
         result(null, {id: res.insertId, ...newBlogPost});
     });
 };
@@ -22,13 +22,13 @@ BlogPost.create = (newBlogPost, result) => {
 BlogPost.findById = (blogPostId, result) => {
     db.query(`SELECT * FROM blogPost WHERE id = ${blogPostId}`, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
 
         if (res.length) {
-            console.log("found blogPost: ", res[0]);
+            // console.log("found blogPost: ", res[0]);
             result(null, res[0]);
             return;
         }
@@ -40,23 +40,23 @@ BlogPost.findById = (blogPostId, result) => {
 BlogPost.getAll = result => {
     db.query("SELECT * FROM blogPost", (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(null, err);
             return;
         }
 
-        console.log("blogPost: ", res);
+        // console.log("blogPost: ", res);
         result(null, res);
     });
 };
 
 BlogPost.updateById = (id, blogPost, result) => {
     db.query(
-        "UPDATE blogPost SET userId = ?, title = ?, content = ? WHERE id = ?",
-        [blogPost.userId, blogPost.title, blogPost.content, id],
+        "UPDATE blogPost SET userId = ?, content = ? WHERE id = ?",
+        [blogPost.userId, blogPost.content, id],
         (err, res) => {
             if (err) {
-                console.log("error: ", err);
+                console.error("error: ", err);
                 result(null, err);
                 return;
             }
@@ -66,7 +66,7 @@ BlogPost.updateById = (id, blogPost, result) => {
                 return;
             }
 
-            console.log("updated blogPost: ", {id: id, ...blogPost});
+            // console.log("updated blogPost: ", {id: id, ...blogPost});
             result(null, {id: id, ...blogPost});
         }
     );
@@ -75,7 +75,7 @@ BlogPost.updateById = (id, blogPost, result) => {
 BlogPost.remove = (id, result) => {
     db.query("DELETE FROM blogPost WHERE id = ?", id, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(null, err);
             return;
         }
@@ -85,7 +85,7 @@ BlogPost.remove = (id, result) => {
             return;
         }
 
-        console.log("deleted blogPost with id: ", id);
+        // console.log("deleted blogPost with id: ", id);
         result(null, res);
     });
 };

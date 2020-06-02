@@ -1,4 +1,5 @@
 const BlogPost = require("../models/blogPostModel.js");
+const User = require("../models/userModel.js");
 
 exports.create = (req, res) => {
     if (!req.body) {
@@ -7,13 +8,12 @@ exports.create = (req, res) => {
         });
     }
 
-    const customer = new BlogPost({
+    const blogPost = new BlogPost({
         userId: req.body.userId,
-        title: req.body.title,
         content: req.body.content
     });
 
-    BlogPost.create(customer, (err, data) => {
+    BlogPost.create(blogPost, (err, data) => {
         if (err)
             res.status(500).send({
                 message:
@@ -24,18 +24,29 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    BlogPost.getAll((err, data) => {
+    BlogPost.getAll((err, blogData) => {
         if (err)
             res.status(500).send({
                 message:
                     err.message || "Some error occurred while retrieving BlogPosts."
             });
-        else res.send(data);
+        else {
+            User.getAll((err, userData) => {
+                if(err) {
+                    res.status(500).send({
+                        message: "Error retrieving Users"
+                    });
+                } else {
+                    blogData.forEach(B => B.user = userData.find(U => U.id === B.userId))
+                    res.send(blogData)
+                }
+            })
+        }
     });
 };
 
 exports.findOne = (req, res) => {
-    BlogPost.findById(req.body.id, (err, data) => {
+    BlogPost.findById(req.body.id, (err, blogData) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
@@ -46,7 +57,24 @@ exports.findOne = (req, res) => {
                     message: "Error retrieving BlogPost with id " + req.body.id
                 });
             }
-        } else res.send(data);
+        } else {
+            User.findById(D.userId, (err, userData) => {
+                if (err) {
+                    if (err.kind === "not_found") {
+                        res.status(404).send({
+                            message: `Couldn't find User with id ${req.body.id}.`
+                        });
+                    } else {
+                        res.status(500).send({
+                            message: "Error retrieving User with id " + req.body.id
+                        });
+                    } 
+                } else {
+                    blogData.user = userData
+                    res.send(blogData);
+                }
+            })
+        }
     });
 };
 

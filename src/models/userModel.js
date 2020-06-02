@@ -1,20 +1,20 @@
 const db = require("../db.js");
 
 const User = function (user) {
-    this.email = user.email;
-    this.name = user.name;
-    this.active = user.active;
+    this.username = user.username;
+    this.password = user.password;
+    this.id = user.id;
 };
 
 User.create = (newUser, result) => {
     db.query("INSERT INTO user SET ?", newUser, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
 
-        console.log("created user: ", {id: res.insertId, ...newUser});
+        // console.log("created user: ", {id: res.insertId, ...newUser});
         result(null, {id: res.insertId, ...newUser});
     });
 };
@@ -22,13 +22,13 @@ User.create = (newUser, result) => {
 User.findById = (userId, result) => {
     db.query(`SELECT * FROM user WHERE id = ${userId}`, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
 
         if (res.length) {
-            console.log("found user: ", res[0]);
+            // console.log("found user: ", res[0]);
             result(null, res[0]);
             return;
         }
@@ -40,13 +40,13 @@ User.findById = (userId, result) => {
 User.findByUsername = (username, result) => {
     db.query(`SELECT * FROM user WHERE username = '${username}'`, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
 
         if (res.length) {
-            console.log("found user: ", res[0]);
+            // console.log("found user: ", res[0]);
             result(null, res[0]);
             return;
         }
@@ -58,12 +58,12 @@ User.findByUsername = (username, result) => {
 User.getAll = result => {
     db.query("SELECT * FROM user", (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(null, err);
             return;
         }
 
-        console.log("user: ", res);
+        // console.log("user: ", res);
         result(null, res);
     });
 };
@@ -74,7 +74,7 @@ User.updateById = (id, user, result) => {
         [user.username, id],
         (err, res) => {
             if (err) {
-                console.log("error: ", err);
+                console.error("error: ", err);
                 result(null, err);
                 return;
             }
@@ -84,7 +84,7 @@ User.updateById = (id, user, result) => {
                 return;
             }
 
-            console.log("updated user: ", {id: id, ...user});
+            // console.log("updated user: ", {id: id, ...user});
             result(null, {id: id, ...user});
         }
     );
@@ -93,7 +93,7 @@ User.updateById = (id, user, result) => {
 User.remove = (id, result) => {
     db.query("DELETE FROM user WHERE id = ?", id, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(null, err);
             return;
         }
@@ -103,7 +103,7 @@ User.remove = (id, result) => {
             return;
         }
 
-        console.log("deleted user with id: ", id);
+        // console.log("deleted user with id: ", id);
         result(null, res);
     });
 };
